@@ -1,0 +1,58 @@
+ Microsoft/Desktop/YayText/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YayText - Unicode Text Styler</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>YayText</h1>
+            <p>Transform your text with Unicode styles</p>
+        </header>
+        
+        <main>
+            <div class="input-section">
+                <textarea id="input-text" placeholder="Enter your text here...">The quick brown fox jumps over the lazy dog.</textarea>
+            </div>
+            
+            <div class="controls-section">
+                <div class="styles-section">
+                    <h2>Text Styles</h2>
+                    <div id="style-buttons" class="style-buttons">
+                        <!-- Style buttons will be added dynamically -->
+                        <div class="loading">Loading styles...</div>
+                    </div>
+                </div>
+                
+                <div class="marks-section">
+                    <h2>Diacritical Marks</h2>
+                    <div id="mark-checkboxes" class="mark-checkboxes">
+                        <!-- Mark checkboxes will be added dynamically -->
+                        <div class="loading">Loading marks...</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="output-section">
+                <h2>Result</h2>
+                <div id="output-text" class="output-display"></div>
+                <button id="copy-button" class="copy-button">Copy to Clipboard</button>
+                <div id="copy-notification" class="copy-notification">Copied!</div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>Created with ♥ using Unicode magic</p>
+        </footer>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
