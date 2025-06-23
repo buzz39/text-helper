@@ -1,4 +1,3 @@
-/** @jsx React.createElement */
 "use client";
 
 import React from "react";

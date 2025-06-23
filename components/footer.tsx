@@ -1,4 +1,3 @@
-/** @jsx React.createElement */
 import React from "react";
 import { Separator } from "@/components/ui/separator";
 
