@@ -49,6 +49,12 @@ export function Navigation() {
             <a href="#help" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               Help
             </a>
+            <a href="/privacy" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+              Privacy
+            </a>
+            <a href="/terms" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+              Terms
+            </a>
           </div>
           
           {/* Actions */}

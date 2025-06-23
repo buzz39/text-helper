@@ -29,7 +29,7 @@ export function Footer() {
             <ul className="space-y-4 text-slate-600 dark:text-slate-400">
               <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Text Styles</a></li>
               <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Features</a></li>
-              <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Pricing</a></li>
+              <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">API</a></li>
               <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Enterprise</a></li>
             </ul>
           </div>
@@ -45,14 +45,14 @@ export function Footer() {
             </ul>
           </div>
           
-          {/* Company */}
+          {/* Legal */}
           <div>
-            <h3 className="font-bold text-slate-900 dark:text-white mb-6">Company</h3>
+            <h3 className="font-bold text-slate-900 dark:text-white mb-6">Legal</h3>
             <ul className="space-y-4 text-slate-600 dark:text-slate-400">
-              <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">About Us</a></li>
+              <li><a href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a></li>
+              <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Cookie Policy</a></li>
               <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms of Service</a></li>
             </ul>
           </div>
         </div>
@@ -61,12 +61,12 @@ export function Footer() {
         
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
           <p className="text-slate-600 dark:text-slate-400">
-            © {currentYear} TextStyler. All rights reserved.
+            © {currentYear} TextStyler Inc. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 text-slate-600 dark:text-slate-400">
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy</a>
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms</a>
-            <a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Sitemap</a>
+            <a href="/privacy" className="hover:text-slate-900 dark:hover:text-white transition-colors">Privacy</a>
+            <a href="/terms" className="hover:text-slate-900 dark:hover:text-white transition-colors">Terms</a>
+            <a href="/sitemap.xml" className="hover:text-slate-900 dark:hover:text-white transition-colors">Sitemap</a>
           </div>
         </div>
       </div>

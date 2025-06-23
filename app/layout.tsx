@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 import { JsonLd } from "@/components/json-ld";
+import { CookieConsentManager } from "@/components/cookie-consent-manager";
 import Script from "next/script";
 
 const inter = Inter({
@@ -113,6 +114,7 @@ export default function RootLayout({
         >
           {children}
           <Toaster />
+          <CookieConsentManager />
         </ThemeProvider>
       </body>
     </html>
