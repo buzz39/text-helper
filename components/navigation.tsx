@@ -18,6 +18,20 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToInputBox = () => {
+    const inputSection = document.querySelector('textarea[placeholder*="Type your text here"]');
+    if (inputSection) {
+      inputSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+      // Focus the input after scrolling
+      setTimeout(() => {
+        (inputSection as HTMLTextAreaElement).focus();
+      }, 500);
+    }
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
@@ -60,7 +74,11 @@ export function Navigation() {
           
           {/* Actions */}
           <div className="flex items-center space-x-4">
-            <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Button 
+              size="sm" 
+              onClick={scrollToInputBox}
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            >
               Get Started
             </Button>
             <ThemeToggle />
