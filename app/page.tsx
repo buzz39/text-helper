@@ -9,7 +9,6 @@ import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { PricingSection } from "@/components/pricing-section";
 import { AnalyticsDashboard } from "@/components/analytics-dashboard";
-import { APISection } from "@/components/api-section";
 import { 
   styleText, 
   getAvailableStyles, 
@@ -289,9 +288,6 @@ export default function HomePage() {
 
               {/* Analytics Dashboard Preview */}
               <AnalyticsDashboard />
-
-              {/* API Integration Section */}
-              <APISection />
 
               {/* Pricing Section */}
               <PricingSection />
