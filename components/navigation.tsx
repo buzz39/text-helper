@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Sparkles } from "lucide-react";
+import Link from "next/link";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,7 +27,7 @@ export function Navigation() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-4">
+          <Link href="/" className="flex items-center space-x-4 hover:opacity-80 transition-opacity">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
               <Sparkles className="w-6 h-6 text-white" />
             </div>
@@ -36,7 +37,7 @@ export function Navigation() {
               </h1>
               <p className="text-sm text-slate-600 dark:text-slate-400 hidden sm:block">Professional Text Formatting</p>
             </div>
-          </div>
+          </Link>
           
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
@@ -49,12 +50,12 @@ export function Navigation() {
             <a href="#help" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               Help
             </a>
-            <a href="/privacy" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+            <Link href="/privacy" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               Privacy
-            </a>
-            <a href="/terms" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+            </Link>
+            <Link href="/terms" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               Terms
-            </a>
+            </Link>
           </div>
           
           {/* Actions */}
