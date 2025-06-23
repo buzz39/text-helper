@@ -5,7 +5,6 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { PricingSection } from "@/components/pricing-section";
 import { 
   styleText, 
   getAvailableStyles, 
@@ -20,10 +19,8 @@ export default function HomePage() {
   const [styledText, setStyledText] = useState("");
   const [activeStyle, setActiveStyle] = useState("bold");
   const [usageCount, setUsageCount] = useState(0);
-  const [isProUser, setIsProUser] = useState(false);
 
   const availableStyles = getAvailableStyles();
-  const freeLimit = 50;
 
   useEffect(() => {
     // Load usage count from localStorage
@@ -34,11 +31,6 @@ export default function HomePage() {
   }, []);
 
   const handleStyleChange = (style: string) => {
-    if (!isProUser && usageCount >= freeLimit) {
-      toast.error("Free limit reached! Upgrade to Pro for unlimited styling.");
-      return;
-    }
-    
     setActiveStyle(style);
     if (inputText) {
       const styled = styleText(inputText, style);
@@ -50,10 +42,6 @@ export default function HomePage() {
   const handleInputChange = (text: string) => {
     setInputText(text);
     if (text) {
-      if (!isProUser && usageCount >= freeLimit) {
-        toast.error("Free limit reached! Upgrade to Pro for unlimited styling.");
-        return;
-      }
       const styled = styleText(text, activeStyle);
       setStyledText(styled);
       incrementUsage();
@@ -142,31 +130,6 @@ export default function HomePage() {
 
           {/* Main Tool */}
           <div className="max-w-6xl mx-auto">
-            {/* Usage Meter for Free Users */}
-            {!isProUser && (
-              <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-2xl p-6 mb-8">
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-lg font-semibold text-amber-800 dark:text-amber-200">
-                    Free Plan Usage
-                  </span>
-                  <span className="text-amber-600 dark:text-amber-300 font-medium">
-                    {usageCount}/{freeLimit} conversions
-                  </span>
-                </div>
-                <div className="w-full bg-amber-200 dark:bg-amber-900 rounded-full h-3">
-                  <div 
-                    className="bg-amber-500 h-3 rounded-full transition-all duration-500"
-                    style={{ width: `${Math.min((usageCount / freeLimit) * 100, 100)}%` }}
-                  ></div>
-                </div>
-                {usageCount >= freeLimit && (
-                  <p className="text-amber-700 dark:text-amber-300 mt-4 font-medium">
-                    Upgrade to Pro for unlimited conversions and advanced features!
-                  </p>
-                )}
-              </div>
-            )}
-            
             {/* Style Selection */}
             <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-3xl p-8 shadow-xl mb-8">
               <div className="flex items-center justify-between mb-6">
@@ -175,39 +138,28 @@ export default function HomePage() {
                   <span className="text-sm text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-700 px-4 py-2 rounded-full font-medium">
                     {getStyleDisplayName(activeStyle)}
                   </span>
-                  {!isProUser && (
-                    <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full font-medium">
-                      FREE
-                    </span>
-                  )}
+                  <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full font-medium">
+                    FREE
+                  </span>
                 </div>
               </div>
               
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                {availableStyles.map((style, index) => {
-                  const isLocked = !isProUser && index > 4; // First 5 styles free
-                  return (
-                    <Button
-                      key={style}
-                      variant={activeStyle === style ? "default" : "outline"}
-                      onClick={() => !isLocked && handleStyleChange(style)}
-                      disabled={isLocked}
-                      className={`h-16 text-lg font-medium hover:scale-105 transition-all duration-200 group relative ${
-                        isLocked ? 'opacity-50 cursor-not-allowed' : ''
-                      } ${activeStyle === style ? 'ring-2 ring-blue-500 ring-offset-2' : ''}`}
-                      title={isLocked ? 'Upgrade to Pro to unlock' : getStyleDisplayName(style)}
-                    >
-                      <span className="group-hover:scale-110 transition-transform">
-                        {getStylePreview(style)}
-                      </span>
-                      {isLocked && (
-                        <span className="absolute -top-2 -right-2 w-5 h-5 bg-amber-500 rounded-full flex items-center justify-center">
-                          <span className="text-white text-xs">🔒</span>
-                        </span>
-                      )}
-                    </Button>
-                  );
-                })}
+                {availableStyles.map((style) => (
+                  <Button
+                    key={style}
+                    variant={activeStyle === style ? "default" : "outline"}
+                    onClick={() => handleStyleChange(style)}
+                    className={`h-16 text-lg font-medium hover:scale-105 transition-all duration-200 group ${
+                      activeStyle === style ? 'ring-2 ring-blue-500 ring-offset-2' : ''
+                    }`}
+                    title={getStyleDisplayName(style)}
+                  >
+                    <span className="group-hover:scale-110 transition-transform">
+                      {getStylePreview(style)}
+                    </span>
+                  </Button>
+                ))}
               </div>
             </div>
             
@@ -225,7 +177,6 @@ export default function HomePage() {
                   value={inputText}
                   onChange={(e) => handleInputChange(e.target.value)}
                   aria-label="Enter text to be styled"
-                  disabled={!isProUser && usageCount >= freeLimit}
                 />
               </div>
               
@@ -296,11 +247,6 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Pricing Section */}
-          <div className="mt-24">
-            <PricingSection />
           </div>
         </div>
       </div>
