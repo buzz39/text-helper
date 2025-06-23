@@ -9,103 +9,108 @@ export function APISection() {
   return (
     <section className="py-12" id="api">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold mb-4">Developer-First API</h2>
+        <h2 className="text-2xl font-bold mb-4">Developer API</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Integrate our text styling capabilities into your applications with our robust REST API. 
-          Built for scale with 99.9% uptime SLA.
+          Integrate our text styling capabilities into your applications with our upcoming REST API.
         </p>
       </div>
       
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              🚀 Quick Start
-              <Badge variant="secondary">RESTful</Badge>
-            </CardTitle>
-            <CardDescription>Get started in minutes with our simple API</CardDescription>
+      <div className="max-w-4xl mx-auto">
+        <Card className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-secondary/5"></div>
+          <CardHeader className="relative text-center pb-8">
+            <div className="flex justify-center mb-4">
+              <Badge variant="secondary" className="text-lg px-4 py-2">
+                🚀 Coming Soon
+              </Badge>
+            </div>
+            <CardTitle className="text-3xl mb-4">API Access</CardTitle>
+            <CardDescription className="text-lg max-w-2xl mx-auto">
+              We're building a powerful REST API that will allow developers to integrate our text styling 
+              capabilities directly into their applications, websites, and services.
+            </CardDescription>
           </CardHeader>
-          <CardContent>
-            <div className="bg-muted/50 rounded-lg p-4 font-mono text-sm">
-              <div className="text-green-600"># Install our SDK</div>
-              <div>npm install @textstyler/sdk</div>
-              <br />
-              <div className="text-green-600"># Make your first API call</div>
-              <div>curl -X POST https://api.textstyler.com/v1/style \</div>
-              <div className="ml-4">-H "Authorization: Bearer YOUR_API_KEY" \</div>
-              <div className="ml-4">-d '{"text": "Hello World", "style": "bold"}'</div>
+          <CardContent className="relative">
+            <div className="grid md:grid-cols-2 gap-8 mb-8">
+              <div>
+                <h3 className="font-bold mb-4 flex items-center gap-2">
+                  🔧 Planned Features
+                </h3>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                    RESTful API with JSON responses
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                    All 15+ text styles available
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                    Batch processing support
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                    Rate limiting and usage analytics
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-primary rounded-full"></span>
+                    SDKs for popular languages
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <h3 className="font-bold mb-4 flex items-center gap-2">
+                  📊 Expected Capabilities
+                </h3>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-secondary rounded-full"></span>
+                    99.9% uptime SLA
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-secondary rounded-full"></span>
+                    Sub-100ms response times
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-secondary rounded-full"></span>
+                    Webhook support
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-secondary rounded-full"></span>
+                    Comprehensive documentation
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-secondary rounded-full"></span>
+                    Developer-friendly pricing
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            <div className="bg-muted/30 rounded-xl p-6 mb-6">
+              <h3 className="font-bold mb-3 text-center">Sample API Call (Preview)</h3>
+              <div className="bg-background/50 rounded-lg p-4 font-mono text-sm">
+                <div className="text-green-600 mb-1"># Coming soon - API endpoint</div>
+                <div className="text-muted-foreground">curl -X POST https://api.textstyler.com/v1/style \</div>
+                <div className="text-muted-foreground ml-4">-H "Authorization: Bearer YOUR_API_KEY" \</div>
+                <div className="text-muted-foreground ml-4">-d '{"text": "Hello World", "style": "bold"}'</div>
+              </div>
+            </div>
+            
+            <div className="text-center">
+              <p className="text-muted-foreground mb-4">
+                Want to be notified when our API launches?
+              </p>
+              <Button size="lg" className="mr-4">
+                Join API Waitlist
+              </Button>
+              <Button variant="outline" size="lg">
+                Request Early Access
+              </Button>
             </div>
           </CardContent>
         </Card>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              📊 API Stats
-              <Badge>Live</Badge>
-            </CardTitle>
-            <CardDescription>Real-time API performance metrics</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span>Response Time</span>
-                <span className="font-bold text-green-600">45ms avg</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Uptime</span>
-                <span className="font-bold text-green-600">99.98%</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Daily API Calls</span>
-                <span className="font-bold">2.4M+</span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span>Rate Limit</span>
-                <span className="font-bold">1000/min</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-      
-      <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8">
-        <div className="grid md:grid-cols-3 gap-8">
-          <div>
-            <h3 className="font-bold mb-3">🔧 SDKs & Libraries</h3>
-            <ul className="space-y-2 text-sm">
-              <li>• JavaScript/TypeScript</li>
-              <li>• Python</li>
-              <li>• PHP</li>
-              <li>• Ruby</li>
-              <li>• Go</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-bold mb-3">🛡️ Enterprise Features</h3>
-            <ul className="space-y-2 text-sm">
-              <li>• Webhook support</li>
-              <li>• Batch processing</li>
-              <li>• Custom rate limits</li>
-              <li>• Dedicated endpoints</li>
-              <li>• SLA guarantees</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-bold mb-3">📚 Resources</h3>
-            <div className="space-y-2">
-              <Button variant="outline" size="sm" className="w-full justify-start">
-                📖 API Documentation
-              </Button>
-              <Button variant="outline" size="sm" className="w-full justify-start">
-                🧪 Interactive Playground
-              </Button>
-              <Button variant="outline" size="sm" className="w-full justify-start">
-                💬 Developer Discord
-              </Button>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );

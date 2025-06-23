@@ -127,7 +127,7 @@ export default function HomePage() {
                     Start Free Trial
                   </Button>
                   <Button variant="outline" size="lg" className="px-8 py-3 text-lg">
-                    View API Docs
+                    Join API Waitlist
                   </Button>
                 </div>
               </header>
@@ -313,8 +313,8 @@ export default function HomePage() {
                       <span>Unlimited text conversions</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-green-500">✓</span>
-                      <span>API access (10,000 calls/month)</span>
+                      <span className="text-amber-500">⏳</span>
+                      <span>API access (coming soon)</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span className="text-green-500">✓</span>
@@ -343,7 +343,7 @@ export default function HomePage() {
                       <p className="text-muted-foreground">- Sarah K., Marketing Director</p>
                     </div>
                     <div className="border-l-4 border-blue-400 pl-3">
-                      <p className="font-medium">"Our API integration processes 1M+ texts daily"</p>
+                      <p className="font-medium">"Can't wait for the API launch!"</p>
                       <p className="text-muted-foreground">- TechCorp Engineering</p>
                     </div>
                   </div>
