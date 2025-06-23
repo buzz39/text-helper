@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Sparkles } from "lucide-react";
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,41 +20,44 @@ export function Navigation() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
-        ? 'bg-background/95 backdrop-blur-md border-b shadow-sm' 
+        ? 'bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm' 
         : 'bg-transparent'
     }`}>
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-primary to-primary/60 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-primary-foreground font-bold text-lg">T</span>
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-                Text Styler
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
+                TextStyler
               </h1>
-              <p className="text-xs text-muted-foreground hidden sm:block">Unicode Text Formatting</p>
+              <p className="text-sm text-slate-600 dark:text-slate-400 hidden sm:block">Professional Text Formatting</p>
             </div>
           </div>
           
           {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-6">
-            <a href="#features" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="#features" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               Features
             </a>
-            <a href="#styles" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-              Styles
+            <a href="#pricing" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+              Pricing
             </a>
-            <a href="#about" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+            <a href="#about" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               About
             </a>
           </div>
           
           {/* Actions */}
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-4">
             <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
-              Share
+              Sign In
+            </Button>
+            <Button size="sm" className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+              Get Started
             </Button>
             <ThemeToggle />
           </div>
