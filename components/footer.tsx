@@ -40,7 +40,7 @@ export function Footer() {
             <ul className="space-y-4 text-slate-600 dark:text-slate-400">
               <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Help Center</a></li>
               <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Tutorials</a></li>
-              <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Blog</a></li>
+              <li><a href="/blog" className="hover:text-slate-900 dark:hover:text-white transition-colors">Blog</a></li>
               <li><a href="#" className="hover:text-slate-900 dark:hover:text-white transition-colors">Community</a></li>
             </ul>
           </div>
