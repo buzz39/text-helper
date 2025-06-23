@@ -1,4 +1,7 @@
+/** @jsx React.createElement */
 "use client";
+
+import React from "react";
 
 export function JsonLd() {
   const structuredData = {

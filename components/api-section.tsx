@@ -1,4 +1,5 @@
-'use client';
+/** @jsx React.createElement */
+"use client";
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
