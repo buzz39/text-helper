@@ -33,10 +33,22 @@ export function Navigation() {
   };
 
   const scrollToFeatures = () => {
-    // Scroll to the style selection section which showcases the main features
-    const featuresSection = document.querySelector('h2:has-text("Choose Your Style")') || 
-                           document.querySelector('[class*="Style Selection"]') ||
-                           document.querySelector('div[class*="grid"][class*="gap-4"]:has(button)');
+    // Find h2 element containing "Choose Your Style" text
+    const h2Elements = document.querySelectorAll('h2');
+    let featuresSection = null;
+    
+    for (const h2 of h2Elements) {
+      if (h2.textContent && h2.textContent.includes('Choose Your Style')) {
+        featuresSection = h2;
+        break;
+      }
+    }
+    
+    // Fallback selectors if the h2 is not found
+    if (!featuresSection) {
+      featuresSection = document.querySelector('[class*="Style Selection"]') ||
+                      document.querySelector('div[class*="grid"][class*="gap-4"]:has(button)');
+    }
     
     if (featuresSection) {
       featuresSection.scrollIntoView({ 
