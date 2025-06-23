@@ -32,6 +32,29 @@ export function Navigation() {
     }
   };
 
+  const scrollToFeatures = () => {
+    // Scroll to the style selection section which showcases the main features
+    const featuresSection = document.querySelector('h2:has-text("Choose Your Style")') || 
+                           document.querySelector('[class*="Style Selection"]') ||
+                           document.querySelector('div[class*="grid"][class*="gap-4"]:has(button)');
+    
+    if (featuresSection) {
+      featuresSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    } else {
+      // Fallback to the main tool section
+      const toolSection = document.querySelector('div[class*="max-w-4xl"]');
+      if (toolSection) {
+        toolSection.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start' 
+        });
+      }
+    }
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
@@ -55,9 +78,12 @@ export function Navigation() {
           
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
+            <button 
+              onClick={scrollToFeatures}
+              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors cursor-pointer"
+            >
               Features
-            </a>
+            </button>
             <a href="#about" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">
               About
             </a>
