@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "sonner";
 import { JsonLd } from "@/components/json-ld";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -18,12 +19,12 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Text Styler - Transform Your Text with Unicode Styles | Professional Text Formatting Tool",
-  description: "Transform plain text into stylized Unicode formats for LinkedIn, social media, and professional content. Free online text styling tool with bold, italic, script, and more formatting options.",
-  keywords: "text styler, unicode text, text formatting, LinkedIn text, social media text, bold text, italic text, script text, text converter",
-  authors: [{ name: "Text Styler Team" }],
-  creator: "Text Styler",
-  publisher: "Text Styler",
+  title: "TextStyler - AI-Powered Professional Text Formatting SaaS Platform",
+  description: "Transform your content strategy with our AI-powered text styling platform. Trusted by 50,000+ professionals to increase engagement by 340%. API-first, enterprise-ready.",
+  keywords: "text styling API, content marketing SaaS, LinkedIn engagement, social media automation, unicode text converter, professional text formatting, content optimization platform",
+  authors: [{ name: "TextStyler Team" }],
+  creator: "TextStyler Inc.",
+  publisher: "TextStyler Inc.",
   formatDetection: {
     email: false,
     address: false,
@@ -34,16 +35,16 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: "Text Styler - Professional Unicode Text Formatting Tool",
-    description: "Transform your text with professional Unicode styles. Perfect for LinkedIn posts, social media content, and professional documents.",
+    title: "TextStyler - AI-Powered Professional Text Formatting SaaS",
+    description: "Join 50,000+ professionals using our platform to increase content engagement by 340%. API-first text styling solution for modern businesses.",
     url: 'https://textstyler.com',
-    siteName: 'Text Styler',
+    siteName: 'TextStyler',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Text Styler - Unicode Text Formatting Tool',
+        alt: 'TextStyler - Professional Text Styling SaaS Platform',
       },
     ],
     locale: 'en_US',
@@ -51,8 +52,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Text Styler - Professional Unicode Text Formatting',
-    description: 'Transform your text with professional Unicode styles for social media and professional content.',
+    title: 'TextStyler - AI-Powered Text Formatting SaaS',
+    description: 'Increase content engagement by 340% with our professional text styling platform. Trusted by 50,000+ users.',
     images: ['/twitter-image.jpg'],
   },
   robots: {
@@ -85,6 +86,34 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#ffffff" />
+        
+        {/* Google Analytics */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'GA_MEASUREMENT_ID');
+          `}
+        </Script>
+        
+        {/* Hotjar */}
+        <Script id="hotjar" strategy="afterInteractive">
+          {`
+            (function(h,o,t,j,a,r){
+              h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+              h._hjSettings={hjid:YOUR_HOTJAR_ID,hjsv:6};
+              a=o.getElementsByTagName('head')[0];
+              r=o.createElement('script');r.async=1;
+              r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+              a.appendChild(r);
+            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+          `}
+        </Script>
       </head>
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}

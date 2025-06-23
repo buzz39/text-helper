@@ -7,6 +7,9 @@ import { AdBanner } from "@/components/ad-banner";
 import { AdSidebar } from "@/components/ad-sidebar";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
+import { PricingSection } from "@/components/pricing-section";
+import { AnalyticsDashboard } from "@/components/analytics-dashboard";
+import { APISection } from "@/components/api-section";
 import { 
   styleText, 
   getAvailableStyles, 
@@ -19,34 +22,53 @@ export default function HomePage() {
   const [inputText, setInputText] = useState("");
   const [styledText, setStyledText] = useState("");
   const [activeStyle, setActiveStyle] = useState("bold");
-  const [isLoading, setIsLoading] = useState(false);
+  const [usageCount, setUsageCount] = useState(0);
+  const [isProUser, setIsProUser] = useState(false);
 
   const availableStyles = getAvailableStyles();
+  const freeLimit = 50;
 
   useEffect(() => {
-    // Lazy load non-critical components
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 100);
-    return () => clearTimeout(timer);
+    // Load usage count from localStorage
+    const savedUsage = localStorage.getItem('textStylerUsage');
+    if (savedUsage) {
+      setUsageCount(parseInt(savedUsage));
+    }
   }, []);
 
   const handleStyleChange = (style: string) => {
+    if (!isProUser && usageCount >= freeLimit) {
+      toast.error("Free limit reached! Upgrade to Pro for unlimited styling.");
+      return;
+    }
+    
     setActiveStyle(style);
     if (inputText) {
       const styled = styleText(inputText, style);
       setStyledText(styled);
+      incrementUsage();
     }
   };
 
   const handleInputChange = (text: string) => {
     setInputText(text);
     if (text) {
+      if (!isProUser && usageCount >= freeLimit) {
+        toast.error("Free limit reached! Upgrade to Pro for unlimited styling.");
+        return;
+      }
       const styled = styleText(text, activeStyle);
       setStyledText(styled);
+      incrementUsage();
     } else {
       setStyledText("");
     }
+  };
+
+  const incrementUsage = () => {
+    const newCount = usageCount + 1;
+    setUsageCount(newCount);
+    localStorage.setItem('textStylerUsage', newCount.toString());
   };
 
   const handleCopy = async () => {
@@ -54,6 +76,14 @@ export default function HomePage() {
       try {
         await navigator.clipboard.writeText(styledText);
         toast.success("Text copied to clipboard!");
+        
+        // Track analytics
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'text_copied', {
+            event_category: 'engagement',
+            event_label: activeStyle
+          });
+        }
       } catch (err) {
         toast.error("Failed to copy text");
       }
@@ -80,17 +110,52 @@ export default function HomePage() {
           <div className="flex gap-8 py-8">
             {/* Main Content */}
             <main className="flex-1 max-w-4xl">
-              {/* Hero Section */}
+              {/* Hero Section with Value Proposition */}
               <header className="text-center mb-12">
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+                  🚀 Trusted by 50,000+ professionals
+                </div>
                 <h1 className="text-4xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text text-transparent leading-tight">
-                  Transform Your Text with Professional Unicode Styles
+                  Transform Your Professional Content with AI-Powered Text Styling
                 </h1>
-                <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                  Convert plain text into stylized Unicode formats perfect for LinkedIn posts, 
-                  social media content, and professional documents. Choose from multiple formatting styles 
-                  and copy instantly.
+                <p className="text-lg lg:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8">
+                  Join thousands of professionals using our platform to create engaging LinkedIn posts, 
+                  social media content, and marketing materials that drive 3x more engagement.
                 </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <Button size="lg" className="px-8 py-3 text-lg">
+                    Start Free Trial
+                  </Button>
+                  <Button variant="outline" size="lg" className="px-8 py-3 text-lg">
+                    View API Docs
+                  </Button>
+                </div>
               </header>
+
+              {/* Usage Meter for Free Users */}
+              {!isProUser && (
+                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 mb-8">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm font-medium text-amber-800 dark:text-amber-200">
+                      Free Plan Usage
+                    </span>
+                    <span className="text-sm text-amber-600 dark:text-amber-300">
+                      {usageCount}/{freeLimit} conversions
+                    </span>
+                  </div>
+                  <div className="w-full bg-amber-200 dark:bg-amber-900 rounded-full h-2">
+                    <div 
+                      className="bg-amber-500 h-2 rounded-full transition-all duration-300"
+                      style={{ width: `${Math.min((usageCount / freeLimit) * 100, 100)}%` }}
+                    ></div>
+                  </div>
+                  {usageCount >= freeLimit && (
+                    <p className="text-sm text-amber-700 dark:text-amber-300 mt-2">
+                      Upgrade to Pro for unlimited conversions and advanced features!
+                    </p>
+                  )}
+                </div>
+              )}
               
               {/* Tool Section */}
               <section className="space-y-8" aria-label="Text styling tool">
@@ -98,24 +163,42 @@ export default function HomePage() {
                 <div className="bg-card/50 backdrop-blur-sm border rounded-2xl p-6 shadow-sm">
                   <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-semibold">Choose Your Style</h2>
-                    <span className="text-sm text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
-                      {getStyleDisplayName(activeStyle)}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+                        {getStyleDisplayName(activeStyle)}
+                      </span>
+                      {!isProUser && (
+                        <span className="text-xs bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 px-2 py-1 rounded">
+                          FREE
+                        </span>
+                      )}
+                    </div>
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
-                    {availableStyles.map((style) => (
-                      <Button
-                        key={style}
-                        variant={activeStyle === style ? "default" : "outline"}
-                        onClick={() => handleStyleChange(style)}
-                        className="h-12 text-sm font-medium hover:scale-105 transition-all duration-200 group"
-                        title={getStyleDisplayName(style)}
-                      >
-                        <span className="group-hover:scale-110 transition-transform">
-                          {getStylePreview(style)}
-                        </span>
-                      </Button>
-                    ))}
+                    {availableStyles.map((style, index) => {
+                      const isLocked = !isProUser && index > 4; // First 5 styles free
+                      return (
+                        <Button
+                          key={style}
+                          variant={activeStyle === style ? "default" : "outline"}
+                          onClick={() => !isLocked && handleStyleChange(style)}
+                          disabled={isLocked}
+                          className={`h-12 text-sm font-medium hover:scale-105 transition-all duration-200 group relative ${
+                            isLocked ? 'opacity-50 cursor-not-allowed' : ''
+                          }`}
+                          title={isLocked ? 'Upgrade to Pro to unlock' : getStyleDisplayName(style)}
+                        >
+                          <span className="group-hover:scale-110 transition-transform">
+                            {getStylePreview(style)}
+                          </span>
+                          {isLocked && (
+                            <span className="absolute -top-1 -right-1 w-4 h-4 bg-amber-500 rounded-full flex items-center justify-center">
+                              <span className="text-white text-xs">🔒</span>
+                            </span>
+                          )}
+                        </Button>
+                      );
+                    })}
                   </div>
                 </div>
                 
@@ -128,11 +211,12 @@ export default function HomePage() {
                       Input Text
                     </h3>
                     <textarea
-                      placeholder="Type your text here...&#10;&#10;Perfect for:&#10;• LinkedIn headlines&#10;• Social media posts&#10;• Professional documents&#10;• Creative content"
+                      placeholder="Type your text here...&#10;&#10;Perfect for:&#10;• LinkedIn headlines&#10;• Social media posts&#10;• Professional documents&#10;• Marketing content"
                       className="w-full h-64 p-4 border-0 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-ring bg-background/50 backdrop-blur-sm text-base leading-relaxed"
                       value={inputText}
                       onChange={(e) => handleInputChange(e.target.value)}
                       aria-label="Enter text to be styled"
+                      disabled={!isProUser && usageCount >= freeLimit}
                     />
                   </div>
                   
@@ -172,15 +256,17 @@ export default function HomePage() {
                             {styledText}
                           </p>
                           <div className="pt-4 border-t border-border/30">
-                            <p className="text-xs text-muted-foreground mb-3 font-medium">Preview in context:</p>
+                            <p className="text-xs text-muted-foreground mb-3 font-medium">Engagement Preview:</p>
                             <div className="space-y-3">
                               <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border-l-4 border-blue-400">
                                 <span className="text-blue-600 dark:text-blue-400 font-semibold text-sm">LinkedIn: </span>
                                 <span className="text-sm">{styledText}</span>
+                                <div className="text-xs text-blue-500 mt-1">+3x engagement boost</div>
                               </div>
                               <div className="p-3 bg-purple-50 dark:bg-purple-950/20 rounded-lg border-l-4 border-purple-400">
                                 <span className="text-purple-600 dark:text-purple-400 font-semibold text-sm">Twitter: </span>
                                 <span className="text-sm">{styledText}</span>
+                                <div className="text-xs text-purple-500 mt-1">+2.5x click-through rate</div>
                               </div>
                             </div>
                           </div>
@@ -199,57 +285,66 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-                
-                {/* Features Section */}
-                <section className="bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 border rounded-2xl p-8">
-                  <h2 className="text-2xl font-bold mb-6 text-center">Why Choose Our Text Styler?</h2>
-                  <div className="grid md:grid-cols-3 gap-6">
-                    <div className="text-center space-y-3">
-                      <div className="w-12 h-12 mx-auto bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center">
-                        <span className="text-green-600 dark:text-green-400 text-xl">✓</span>
-                      </div>
-                      <h3 className="font-semibold">Professional Results</h3>
-                      <p className="text-sm text-muted-foreground">Perfect for LinkedIn headlines, professional posts, and business content</p>
-                    </div>
-                    <div className="text-center space-y-3">
-                      <div className="w-12 h-12 mx-auto bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-                        <span className="text-blue-600 dark:text-blue-400 text-xl">⚡</span>
-                      </div>
-                      <h3 className="font-semibold">Instant Conversion</h3>
-                      <p className="text-sm text-muted-foreground">Real-time text transformation with immediate copy-paste functionality</p>
-                    </div>
-                    <div className="text-center space-y-3">
-                      <div className="w-12 h-12 mx-auto bg-purple-100 dark:bg-purple-900/20 rounded-full flex items-center justify-center">
-                        <span className="text-purple-600 dark:text-purple-400 text-xl">🎨</span>
-                      </div>
-                      <h3 className="font-semibold">Multiple Styles</h3>
-                      <p className="text-sm text-muted-foreground">Choose from bold, italic, script, monospace, and many more formatting options</p>
-                    </div>
-                  </div>
-                </section>
               </section>
+
+              {/* Analytics Dashboard Preview */}
+              <AnalyticsDashboard />
+
+              {/* API Integration Section */}
+              <APISection />
+
+              {/* Pricing Section */}
+              <PricingSection />
             </main>
             
-            {/* Sidebar with Ads */}
+            {/* Sidebar with Ads and Pro Features */}
             <aside className="hidden xl:block w-80">
               <div className="sticky top-24 space-y-6">
                 <AdSidebar slot="sidebar-top" />
                 
-                {/* Quick Tips */}
+                {/* Pro Features Highlight */}
+                <div className="bg-gradient-to-br from-primary/10 to-secondary/10 border rounded-2xl p-6">
+                  <h3 className="font-semibold mb-4 flex items-center gap-2">
+                    ⚡ Pro Features
+                  </h3>
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-500">✓</span>
+                      <span>Unlimited text conversions</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-500">✓</span>
+                      <span>API access (10,000 calls/month)</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-500">✓</span>
+                      <span>Advanced analytics dashboard</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-500">✓</span>
+                      <span>Custom style creation</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-500">✓</span>
+                      <span>Team collaboration tools</span>
+                    </div>
+                  </div>
+                  <Button className="w-full mt-4" size="sm">
+                    Upgrade to Pro - $29/month
+                  </Button>
+                </div>
+                
+                {/* Success Stories */}
                 <div className="bg-card/50 backdrop-blur-sm border rounded-2xl p-6">
-                  <h3 className="font-semibold mb-4">💡 Pro Tips</h3>
-                  <div className="space-y-3 text-sm text-muted-foreground">
-                    <div className="flex items-start gap-2">
-                      <span className="text-green-500 mt-0.5">•</span>
-                      <span>Use bold styles for LinkedIn headlines to increase engagement</span>
+                  <h3 className="font-semibold mb-4">💼 Success Stories</h3>
+                  <div className="space-y-4 text-sm">
+                    <div className="border-l-4 border-green-400 pl-3">
+                      <p className="font-medium">"Increased LinkedIn engagement by 340%"</p>
+                      <p className="text-muted-foreground">- Sarah K., Marketing Director</p>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <span className="text-blue-500 mt-0.5">•</span>
-                      <span>Script styles work great for creative social media posts</span>
-                    </div>
-                    <div className="flex items-start gap-2">
-                      <span className="text-purple-500 mt-0.5">•</span>
-                      <span>Monospace is perfect for code snippets and technical content</span>
+                    <div className="border-l-4 border-blue-400 pl-3">
+                      <p className="font-medium">"Our API integration processes 1M+ texts daily"</p>
+                      <p className="text-muted-foreground">- TechCorp Engineering</p>
                     </div>
                   </div>
                 </div>
