@@ -1,5 +1,8 @@
 const nextConfig = {
-  /* config options here */
+  swcMinify: true,
+  compiler: {
+    jsxRuntime: 'automatic'
+  }
 };
 
 export default nextConfig;
